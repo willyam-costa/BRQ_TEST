@@ -7,7 +7,20 @@
 
 import UIKit
 
-final class ListaCarrosViewController: UIViewController {
+protocol ListaCarroDelegate {
+    func setList  (lista: [CarrosModel])
+    
+}
+
+  
+final class ListaCarrosViewController: UIViewController, ListaCarroDelegate {
+    func setList(lista: [CarrosModel]) {
+      
+        self.carros = lista
+        reloadUI()
+    }
+    
+    var carros: [CarrosModel] = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -28,6 +41,10 @@ final class ListaCarrosViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
+        CarrosListaConnection(delegate: self).connect()
+       
+        
         super.viewDidLoad()
         view.backgroundColor = .systemGray
         tableView.dataSource = self
@@ -69,11 +86,12 @@ extension ListaCarrosViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let carrosCell = ListaCarrosCell()
-        carrosCell.idLabel.text = viewModel.id(at: indexPath.row) 
-        carrosCell.nomeLabel.text = viewModel.nome(at: indexPath.row)
-        carrosCell.tipoLabel.text = viewModel.tipo(at: indexPath.row)
-        carrosCell.urlFotoImageView.image = UIImage(named: viewModel.urlFoto(at: indexPath.row))
-        carrosCell.setUpCell()
+        carrosCell.idLabel.text = "\(String(describing: carros[indexPath.row].id))"
+       // carrosCell.idLabel.text = viewModel.id(at: indexPath.row)
+//        carrosCell.nomeLabel.text = viewModel.nome(at: indexPath.row)
+//        carrosCell.tipoLabel.text = viewModel.tipo(at: indexPath.row)
+//        carrosCell.urlFotoImageView.image = UIImage(named: viewModel.urlFoto(at: indexPath.row))
+//        carrosCell.setUpCell()
         
         return carrosCell
     }

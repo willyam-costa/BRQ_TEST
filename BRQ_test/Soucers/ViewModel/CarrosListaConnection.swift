@@ -9,41 +9,21 @@ import Foundation
 import Alamofire
 
 
-struct CarrosListaResponse: Codable {
-    
-    let id: Int?
-    let nome: String?
-    let tipo: String?
-    let descricao: String?
-    let urlFoto: String?
-    let urlVideo: String?
-    let latitude: String?
-    let longitude: String?
-    
-}
 
 class CarrosListaConnection {
     private let url = "https://carros-springboot.herokuapp.com/api/v2/carros"    
+    var delegate: ListaCarroDelegate
+    init(delegate: ListaCarroDelegate) {
+        self.delegate = delegate
+    }
     
-    func connect(id: Int,
-                 nome: String,
-                 tipo: String,
-                 descricao: String,
-                 urlFoto: String,
-                 urlVideo: String,
-                 latitude: String,
-                 longitude: String){
-        let carrosDados = CarrosModel(id: id,
-                               nome: nome,
-                               tipo: tipo,
-                               descricao: descricao,
-                               urlFoto: urlFoto,
-                               urlVideo: urlVideo,
-                               latitude: latitude,
-                               longitude: longitude)
-        AF.request(url, method: .post, parameters: carrosDados, encoder: JSONParameterEncoder.default).responseDecodable(of: CarrosListaResponse.self) { response in
-            print("######## resposta #########")
-            print(response)
+    func connect(){
+        AF.request(url, method: .post).responseDecodable(of: [CarrosModel].self) { response in
+            guard let carros = response.value
+            else {return}
+            self.delegate.setList(lista: carros )
+            
         }
     }
 }
+

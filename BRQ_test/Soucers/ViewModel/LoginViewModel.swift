@@ -28,8 +28,7 @@ final class LoginViewModel {
     
     public func listaCarrosScreen() {
         if password == "user" && login == "123" {
-            coordinator.showListaCarrosScreen()
-            
+            coordinator.showListaCarrosScreen()            
             
         } else {
             delegate?.reject()

@@ -23,10 +23,8 @@ final class MainCoordinator: Coordinator {
     
     func showListaCarrosScreen() {
         var carros: [CarrosModel] = []
-        /*
-         Falta realizar a implementação de chamada de dados da API para serem jogadas em Array de carros
-         */
         
+
         let viewModel = CarrosListaViewModel(coordinator: self, model: carros)
         
         let vc = ListaCarrosViewController(viewModel: viewModel)
