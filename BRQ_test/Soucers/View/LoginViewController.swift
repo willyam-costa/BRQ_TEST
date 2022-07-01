@@ -11,6 +11,13 @@ import UIKit
 
 final class  LoginViewController: UIViewController {
     
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.image = UIImage(named: "imageBack")
+        imageView.contentMode = .scaleToFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     private lazy var loginLabel: UILabel = {
         let view = UILabel(frame: .zero)
@@ -65,6 +72,16 @@ final class  LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        //MARK: - Image
+        view.insertSubview(imageView, at: 0)
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
         view.backgroundColor = .white
         
         loginLabel.text = "Login"
@@ -144,13 +161,12 @@ final class  LoginViewController: UIViewController {
         print("clicou")
     }
 }
+
 // Alerta não funcionando
 
-extension LoginViewController: LoginDelegate{
+extension LoginViewController: LoginDelegate {
     func reject() {
-        let alerta = UIAlertController(title: "Mensagem", message: "Login incorreto", preferredStyle: UIAlertController.Style.alert)
-        alerta.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alerta, animated: true, completion: nil)
+        
     }
 }
 

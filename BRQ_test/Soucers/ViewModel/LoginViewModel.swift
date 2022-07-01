@@ -10,7 +10,7 @@ import Foundation
 
 protocol LoginDelegate: AnyObject {
     func reject()
-}
+    
 
 final class LoginViewModel {
     private var model: LoginModel
